@@ -106,6 +106,10 @@ const StTodoList = styled.li<Props>`
     text-align: center;
     margin-bottom: 10px;
   }
+  & > div > p {
+    padding: 10px;
+    text-align: center;
+  }
 `;
 
 const StTodoBtn = styled.div<Props>`
