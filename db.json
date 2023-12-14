@@ -4,19 +4,13 @@
       "id": 1,
       "title": "test1",
       "contents": "test1",
+      "isDone": false
+    },
+    {
+      "id": 2,
+      "title": "test2",
+      "contents": "test2",
       "isDone": true
-    },
-    {
-      "id": "c0208073-defd-475e-87fd-fb3cc9482348",
-      "title": "추가합니다용요",
-      "contents": "추가추가추가",
-      "isDone": false
-    },
-    {
-      "id": "e46c1bc5-dce8-4f90-965a-90758a3c7ffb",
-      "title": "와아",
-      "contents": "아아ㅏ",
-      "isDone": false
     }
   ]
 }
