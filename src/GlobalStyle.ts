@@ -29,10 +29,14 @@ time, mark, audio, video {
 	vertical-align: baseline;
   box-sizing: border-box;
 }
+#root {
+	height: 100%;
+}
 
 html{
 	max-width: 1200px;
 	min-width: 800px;
+	height: 100%;
 	margin: 0px auto;
 }
 

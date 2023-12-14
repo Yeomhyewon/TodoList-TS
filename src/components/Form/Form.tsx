@@ -30,24 +30,31 @@ const Form = () => {
       contents,
       isDone: false,
     };
+    alert("등록되었습니다😀");
     dispatch(addTodo(newTodo));
+    setContents("");
+    setTitle("");
   };
 
   return (
     <StForm onSubmit={handleAddTodo}>
       <StInputContainer>
-        제목:
-        <input
-          value={title}
-          onChange={handleTitleOnChange}
-          placeholder="제목을 입력해주세요."
-        />
-        내용:
-        <input
-          value={contents}
-          onChange={handleContentsOnChange}
-          placeholder="내용을 입력해주세요."
-        />
+        <div>
+          제목:{" "}
+          <input
+            value={title}
+            onChange={handleTitleOnChange}
+            placeholder="제목을 입력해주세요."
+          />
+        </div>
+        <div>
+          내용:{" "}
+          <input
+            value={contents}
+            onChange={handleContentsOnChange}
+            placeholder="내용을 입력해주세요."
+          />
+        </div>
       </StInputContainer>
       <div>
         <StBtn type="submit">등록</StBtn>
@@ -57,7 +64,6 @@ const Form = () => {
 };
 
 const StForm = styled.form`
-  background-color: #fffdde;
   width: 100%;
   height: 100px;
   display: flex;
@@ -66,10 +72,8 @@ const StForm = styled.form`
 `;
 
 const StInputContainer = styled.div`
-  width: 50%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 30px;
 
   input {
     background-color: #d9d7f1;
