@@ -3,24 +3,13 @@ import Form from "./components/Form/Form";
 import Todo from "./components/Todo/Todo";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setTodo } from "./redux/modules/todosSlice";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const App = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const todoData = async () => {
-      const { data } = await axios.get("http://localhost:4000/todos");
-      dispatch(setTodo(data));
-    };
-
-    todoData();
-  }, []);
+  const queryClient = new QueryClient();
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <StLayout>
         <h2>TodoList</h2>
       </StLayout>
@@ -45,7 +34,7 @@ const App = () => {
       <StLayout>
         <p>ⓒ 2023. Yeom. All rights reserved.</p>
       </StLayout>
-    </>
+    </QueryClientProvider>
   );
 };
 

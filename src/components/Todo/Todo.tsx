@@ -1,19 +1,36 @@
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "src/redux/config/configStore";
-import { deleteTodo, switchTodo } from "src/redux/modules/todosSlice";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import { deleteTodo, getTodos, switchTodo } from "src/api/todos";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+
+import type { TodoType } from "types/todo";
 
 interface Props {
   $bdcolor: boolean;
 }
 
 const Todo = ({ isActive }: { isActive: boolean }) => {
-  const todos = useSelector((state: RootState) => state.todos);
-  console.log(todos);
+  const { isError, isLoading, data } = useQuery("todos", getTodos);
 
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation(deleteTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+  const switchMutation = useMutation(switchTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (isError) {
+    return <div>오류가 발생하였습니다.</div>;
+  }
 
   const handleDeleteTodo = async (id: string) => {
     Swal.fire({
@@ -29,27 +46,22 @@ const Todo = ({ isActive }: { isActive: boolean }) => {
         Swal.fire({
           title: "삭제되었습니다.",
         });
-        dispatch(deleteTodo(id));
-        axios.delete(`http://localhost:4000/todos/${id}`);
+        deleteMutation.mutate(id);
       }
     });
   };
 
-  const handleSwitchTodo = async (id: string) => {
-    dispatch(switchTodo(id));
-    const todo = todos.find((i) => i.id === id);
-    await axios.patch(`http://localhost:4000/todos/${id}`, {
-      isDone: !todo?.isDone,
-    });
+  const handleSwitchTodo = async (todo: TodoType) => {
+    switchMutation.mutate(todo);
   };
 
   return (
     <StContainer>
       <p>{isActive ? "Done😁" : "Working🔥"}</p>
       <ul>
-        {todos
-          .filter((item) => item.isDone === isActive)
-          .map((item) => {
+        {data
+          ?.filter((item: TodoType) => item.isDone === isActive)
+          .map((item: TodoType) => {
             return (
               <StTodoList key={item.id} $bdcolor={item.isDone}>
                 <div>
@@ -60,7 +72,7 @@ const Todo = ({ isActive }: { isActive: boolean }) => {
                   <button onClick={() => handleDeleteTodo(item.id)}>
                     삭제
                   </button>
-                  <button onClick={() => handleSwitchTodo(item.id)}>
+                  <button onClick={() => handleSwitchTodo(item)}>
                     {item.isDone ? "취소" : "완료"}
                   </button>
                 </StTodoBtn>
