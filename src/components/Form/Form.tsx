@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { addTodo } from "src/redux/modules/todosSlice";
-import { Todo } from "types/todo";
+import { TodoType } from "types/todo";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Form = () => {
       return toast.warning("내용을 입력해주세요");
     }
 
-    const newTodo: Todo = {
+    const newTodo: TodoType = {
       id: uuidv4(),
       title,
       contents,
@@ -33,6 +34,7 @@ const Form = () => {
     };
     toast.success("등록되었습니다😀");
     dispatch(addTodo(newTodo));
+    axios.post(`http://localhost:4000/todos`, newTodo);
     setContents("");
     setTitle("");
   };

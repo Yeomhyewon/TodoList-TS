@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/config/configStore";
 import { deleteTodo, switchTodo } from "src/redux/modules/todosSlice";
@@ -10,9 +11,11 @@ interface Props {
 
 const Todo = ({ isActive }: { isActive: boolean }) => {
   const todos = useSelector((state: RootState) => state.todos);
+  console.log(todos);
+
   const dispatch = useDispatch();
 
-  const handleDeleteTodo = (id: string) => {
+  const handleDeleteTodo = async (id: string) => {
     Swal.fire({
       title: "삭제하시겠습니까?",
       text: "삭제하면 되돌릴 수 없습니다.",
@@ -27,12 +30,17 @@ const Todo = ({ isActive }: { isActive: boolean }) => {
           title: "삭제되었습니다.",
         });
         dispatch(deleteTodo(id));
+        axios.delete(`http://localhost:4000/todos/${id}`);
       }
     });
   };
 
-  const handleSwitchTodo = (id: string) => {
+  const handleSwitchTodo = async (id: string) => {
     dispatch(switchTodo(id));
+    const todo = todos.find((i) => i.id === id);
+    await axios.patch(`http://localhost:4000/todos/${id}`, {
+      isDone: !todo?.isDone,
+    });
   };
 
   return (

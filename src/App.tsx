@@ -3,8 +3,22 @@ import Form from "./components/Form/Form";
 import Todo from "./components/Todo/Todo";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setTodo } from "./redux/modules/todosSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const todoData = async () => {
+      const { data } = await axios.get("http://localhost:4000/todos");
+      dispatch(setTodo(data));
+    };
+
+    todoData();
+  }, []);
+
   return (
     <>
       <StLayout>
