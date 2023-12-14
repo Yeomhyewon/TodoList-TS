@@ -3,7 +3,6 @@ import type { TodoType } from "types/todo";
 
 const getTodos = async () => {
   const response = await axios.get("http://localhost:4000/todos");
-  console.log(response);
   return response.data;
 };
 
