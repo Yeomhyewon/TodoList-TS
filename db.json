@@ -4,19 +4,13 @@
       "id": 1,
       "title": "test1",
       "contents": "test1",
+      "isDone": false
+    },
+    {
+      "id": 2,
+      "title": "test2",
+      "contents": "test2",
       "isDone": true
-    },
-    {
-      "id": "2fb3024b-ea3e-4fde-befa-d08152f3c348",
-      "title": "cnrk",
-      "contents": "sddfsdfd",
-      "isDone": false
-    },
-    {
-      "id": "0f401392-1a33-40db-842e-4cfdf23f8b0e",
-      "title": "a",
-      "contents": "a",
-      "isDone": false
     }
   ]
 }
