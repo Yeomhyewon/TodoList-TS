@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Form from "./components/Form/Form";
 import Todo from "./components/Todo/Todo";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -9,6 +11,19 @@ const App = () => {
         <h2>TodoList</h2>
       </StLayout>
       <StBody>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          limit={2}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <Form />
         <Todo isActive={false} />
         <Todo isActive={true} />

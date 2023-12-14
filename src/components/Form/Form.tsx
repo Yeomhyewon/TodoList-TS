@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { addTodo } from "src/redux/modules/todosSlice";
 import { Todo } from "types/todo";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -19,9 +20,9 @@ const Form = () => {
     e.preventDefault();
 
     if (title === "") {
-      return alert("제목을 입력해주세요");
+      return toast.warning("제목을 입력해주세요.");
     } else if (contents === "") {
-      return alert("내용을 입력해주세요");
+      return toast.warning("내용을 입력해주세요");
     }
 
     const newTodo: Todo = {
@@ -30,7 +31,7 @@ const Form = () => {
       contents,
       isDone: false,
     };
-    alert("등록되었습니다😀");
+    toast.success("등록되었습니다😀");
     dispatch(addTodo(newTodo));
     setContents("");
     setTitle("");

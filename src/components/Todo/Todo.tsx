@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/config/configStore";
 import { deleteTodo, switchTodo } from "src/redux/modules/todosSlice";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 interface Props {
   $bdcolor: boolean;
@@ -12,7 +13,25 @@ const Todo = ({ isActive }: { isActive: boolean }) => {
   const dispatch = useDispatch();
 
   const handleDeleteTodo = (id: string) => {
-    dispatch(deleteTodo(id));
+    Swal.fire({
+      title: "삭제하시겠습니까?",
+      text: "삭제 시 되돌릴 수 없습니다.",
+      icon: "warning",
+      width: "400px",
+      showCancelButton: true,
+      confirmButtonColor: "#d9d7f1",
+      cancelButtonColor: "#FFCBCB",
+      cancelButtonText: "취소하기",
+      confirmButtonText: "삭제하기",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "삭제되었습니다.",
+          icon: "success",
+        });
+        dispatch(deleteTodo(id));
+      }
+    });
   };
   const handleSwitchTodo = (id: string) => {
     dispatch(switchTodo(id));
