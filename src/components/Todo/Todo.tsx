@@ -17,6 +17,7 @@ const Todo = ({ isActive }: { isActive: boolean }) => {
       title: "삭제하시겠습니까?",
       text: "삭제하면 되돌릴 수 없습니다.",
       showCancelButton: true,
+      icon: "warning",
       confirmButtonColor: "#d9d7f1",
       cancelButtonColor: "#FFCBCB",
       cancelButtonText: "취소하기",
@@ -25,6 +26,7 @@ const Todo = ({ isActive }: { isActive: boolean }) => {
       if (result.isConfirmed) {
         Swal.fire({
           title: "삭제되었습니다.",
+          icon: "success",
         });
         dispatch(deleteTodo(id));
       }
