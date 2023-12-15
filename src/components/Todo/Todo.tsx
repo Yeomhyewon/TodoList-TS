@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Swal from "sweetalert2";
 import { deleteTodo, getTodos, switchTodo } from "src/api/todos";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import Swal from "sweetalert2";
 
 import type { TodoType } from "types/todo";
 
