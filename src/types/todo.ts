@@ -1,4 +1,4 @@
-export interface Todo {
+export interface Todos {
   id: string;
   title: string;
   contents: string;

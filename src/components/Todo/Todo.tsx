@@ -1,17 +1,29 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "src/redux/config/configStore";
-import { deleteTodo, switchTodo } from "src/redux/modules/todosSlice";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import { Todos } from "types/todo";
 
 interface Props {
   $bdcolor: boolean;
 }
 
-const Todo = ({ isActive }: { isActive: boolean }) => {
-  const todos = useSelector((state: RootState) => state.todos);
-  const dispatch = useDispatch();
-
+const Todo = ({
+  isActive,
+  todos,
+  setTodos,
+}: {
+  isActive: boolean;
+  todos: Todos[];
+  setTodos: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        title: string;
+        contents: string;
+        isDone: boolean;
+      }[]
+    >
+  >;
+}) => {
   const handleDeleteTodo = (id: string) => {
     Swal.fire({
       title: "삭제하시겠습니까?",
@@ -28,13 +40,17 @@ const Todo = ({ isActive }: { isActive: boolean }) => {
           title: "삭제되었습니다.",
           icon: "success",
         });
-        dispatch(deleteTodo(id));
+        const filteringTodos = todos.filter((i) => i.id !== id);
+        setTodos(filteringTodos);
       }
     });
   };
 
   const handleSwitchTodo = (id: string) => {
-    dispatch(switchTodo(id));
+    const switchTodos = todos.map((item) =>
+      item.id === id ? { ...item, isDone: !item.isDone } : item
+    );
+    setTodos(switchTodos);
   };
 
   return (

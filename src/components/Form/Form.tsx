@@ -1,13 +1,25 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addTodo } from "src/redux/modules/todosSlice";
-import { Todo } from "types/todo";
+import { Todos } from "types/todo";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
-const Form = () => {
-  const dispatch = useDispatch();
+const Form = ({
+  todos,
+  setTodos,
+}: {
+  todos: Todos[];
+  setTodos: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        title: string;
+        contents: string;
+        isDone: boolean;
+      }[]
+    >
+  >;
+}) => {
   const [title, setTitle] = useState<string>("");
   const [contents, setContents] = useState<string>("");
 
@@ -25,14 +37,14 @@ const Form = () => {
       return toast.warning("내용을 입력해주세요");
     }
 
-    const newTodo: Todo = {
+    const newTodo: Todos = {
       id: uuidv4(),
       title,
       contents,
       isDone: false,
     };
     toast.success("등록되었습니다😀");
-    dispatch(addTodo(newTodo));
+    setTodos([...todos, newTodo]);
     setContents("");
     setTitle("");
   };
